@@ -13,8 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gyuri-cloud-o6yv5bqt1-sophie-24s-projects.vercel.app"),
   title: "김규리 | Backend Engineer Portfolio",
-  description: "FastAPI · Spring Boot · 데이터 파이프라인을 다루는 백엔드 엔지니어 김규리의 포트폴리오입니다.",
+  description:
+    "FastAPI, Spring Boot, 데이터 파이프라인을 중심으로 API 설계와 백엔드 문제 해결 경험을 정리한 김규리의 포트폴리오입니다.",
+  openGraph: {
+    title: "김규리 | Backend Engineer Portfolio",
+    description:
+      "API 설계, 비동기 처리, 데이터 파이프라인, RAG 기반 서비스 구현 경험을 담은 백엔드 개발자 포트폴리오입니다.",
+    url: "https://gyuri-cloud-o6yv5bqt1-sophie-24s-projects.vercel.app",
+    siteName: "김규리 포트폴리오",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
