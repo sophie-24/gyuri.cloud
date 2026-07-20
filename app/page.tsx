@@ -8,6 +8,87 @@ type Lang = "ko" | "en";
 // ─── PROJECTS ────────────────────────────────────────────────────────────────
 const projects = [
   {
+    id: "haphap",
+    gradient: "linear-gradient(135deg, #4c1d95 0%, #7c3aed 55%, #c4b5fd 100%)",
+    emoji: "📅",
+    ko: {
+      title: "HAPHAP",
+      period: "2026.06 ~ 진행 중",
+      role: "백엔드 · SOPT 앱잼",
+      badge: "앱 출시 준비 중",
+      badgeBg: "#6d28d9",
+      shortDesc: "채용 전형 일정을 한곳에서 관리하는 캘린더 서비스",
+      desc: "관심 공고를 등록하면 서류·면접·최종 전형 일정을 캘린더로 관리하고, 발표 가능성 인디케이터와 검색·자동완성으로 공고를 빠르게 찾는 모바일 서비스입니다. Android·기획·디자인·서버 11인 팀의 2주 합숙 앱잼으로 시작해 출시를 목표로 스프린트를 이어가고 있습니다.",
+      tags: ["Spring Boot", "PostgreSQL", "Redis", "Docker", "GitHub Actions", "Prometheus", "Grafana"],
+      scopeTitle: "백엔드 담당 범위",
+      scope: [
+        "pg_trgm + GIN 인덱스 기반 공고 검색·자동완성·인기 공고 API",
+        "캘린더 월별 인디케이터 및 날짜별 전형 카드 조회 API",
+        "Kakao OAuth + JWT 인증, Redis 리프레시 토큰·블랙리스트 관리",
+        "GitHub Actions + Docker + Nginx Blue/Green 무중단 배포 파이프라인",
+        "Prometheus·Grafana 지표 수집, MDC 구조화 로그, Dozzle 로그 운영",
+        "17개 API의 명세-문서-코드 3-way 검증 및 Android 연동 조율",
+      ],
+      highlightsTitle: "기술적 의사결정 & 트러블슈팅",
+      highlights: [
+        {
+          label: "카카오 로그인 레이스 컨디션 해결",
+          detail:
+            "동시 로그인 요청 시 중복 계정이 생성될 수 있는 문제 발견. provider + provider_id 유니크 제약과 충돌 시 재조회 방식으로 DB 레벨에서 정합성 보장 → 사전 조회는 동시성 안전장치가 아님을 학습.",
+        },
+        {
+          label: "검색 엔진 없이 자동완성 구현",
+          detail:
+            "2주 안에 운영 복잡도를 늘리지 않기 위해 Elasticsearch 대신 PostgreSQL pg_trgm + GIN 인덱스 선택. search 도메인으로 캡슐화해 추후 교체 시 다른 도메인 변경 최소화.",
+        },
+        {
+          label: "Prometheus 스크래핑 401과 보안 분리",
+          detail:
+            "/actuator/prometheus 인증 문제를 단순 permitAll 대신, 앱에서는 스크래핑 허용·외부 노출 차단은 Nginx로 분리 → '인증 허용'과 '외부 노출 허용'의 책임 분리 원칙 정립.",
+        },
+      ],
+    },
+    en: {
+      title: "HAPHAP",
+      period: "Jun 2026 ~ Present",
+      role: "Backend · SOPT APPJAM",
+      badge: "Preparing App Launch",
+      badgeBg: "#6d28d9",
+      shortDesc: "A calendar service for managing job application timelines",
+      desc: "Register job postings and manage document, interview, and final-round schedules on a calendar, with result-likelihood indicators and search/autocomplete. Started as a 2-week APPJAM with an 11-person team (Android, planning, design, server) and continuing sprints toward launch.",
+      tags: ["Spring Boot", "PostgreSQL", "Redis", "Docker", "GitHub Actions", "Prometheus", "Grafana"],
+      scopeTitle: "Backend Responsibilities",
+      scope: [
+        "Posting search, autocomplete, and trending API with pg_trgm + GIN index",
+        "Monthly indicator & per-date application card calendar APIs",
+        "Kakao OAuth + JWT auth, Redis refresh-token & blacklist management",
+        "Blue/Green zero-downtime pipeline with GitHub Actions + Docker + Nginx",
+        "Prometheus·Grafana metrics, MDC structured logging, Dozzle log ops",
+        "3-way verification (spec–docs–code) of 17 APIs & Android integration",
+      ],
+      highlightsTitle: "Technical Decisions & Troubleshooting",
+      highlights: [
+        {
+          label: "Solved Kakao Login Race Condition",
+          detail:
+            "Concurrent login requests could create duplicate accounts. Guaranteed integrity at DB level with a provider + provider_id unique constraint and re-query on conflict — learned that pre-checks are not concurrency safeguards.",
+        },
+        {
+          label: "Autocomplete Without a Search Engine",
+          detail:
+            "Chose PostgreSQL pg_trgm + GIN index over Elasticsearch to keep ops complexity low within 2 weeks. Encapsulated in a search domain to minimize changes if swapped later.",
+        },
+        {
+          label: "Prometheus 401 & Security Separation",
+          detail:
+            "Instead of a blanket permitAll on /actuator/prometheus, allowed scraping at app level while blocking external exposure via Nginx → separated 'auth allowance' from 'external exposure'.",
+        },
+      ],
+    },
+    githubUrl: null,
+    notionUrl: "https://www.notion.so/39930ae59565800594b7e0a2d094a944",
+  },
+  {
     id: "tubify",
     gradient: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #93c5fd 100%)",
     emoji: "🎵",
@@ -169,98 +250,106 @@ const projects = [
     githubUrl: "https://github.com/sophie-24/seoul-25-ht-RePlanet",
     notionUrl: "https://www.notion.so/26730ae595658052b688f05d0a6b3928",
   },
+];
+
+// ─── MORE PROJECTS ───────────────────────────────────────────────────────────
+const moreProjects = [
+  {
+    id: "blur",
+    notionUrl: "https://www.notion.so/27c30ae5956582a1afb9817388befc77",
+    tags: ["Spring Boot", "MySQL", "Docker", "Nginx"],
+    ko: {
+      title: "Blur",
+      badge: "SOPKATHON 안드로이드 파트 대상",
+      meta: "2026.05 · SOPT SOPKATHON · 백엔드",
+      desc: "기록이 아닌 망각을 통해 온전한 나를 마주하는 공간. EC2 + Nginx 기반 Blue/Green 무중단 배포 환경을 직접 구성했습니다.",
+    },
+    en: {
+      title: "Blur",
+      badge: "SOPKATHON Grand Prize (Android)",
+      meta: "May 2026 · SOPT SOPKATHON · Backend",
+      desc: "A space for facing yourself through forgetting, not recording. Built a Blue/Green zero-downtime deployment on EC2 + Nginx.",
+    },
+  },
   {
     id: "dlog",
-    gradient: "linear-gradient(135deg, #92400e 0%, #d97706 55%, #fde68a 100%)",
-    emoji: "🔊",
+    notionUrl: "https://www.notion.so/7e630ae59565829c928e810e1e4b1798",
+    tags: ["FastAPI", "YAMNet", "LSTM", "oneM2M", "Arduino"],
     ko: {
       title: "D-Log",
-      period: "2026",
-      role: "AI 서버 · 데이터 파이프라인",
-      badge: "SOPKATHON 대상",
-      badgeBg: "#b45309",
-      shortDesc: "oneM2M 기반 층간소음 객관화 AI 플랫폼",
-      desc: "Arduino ESP32 센서로 수집한 소음 데이터를 YAMNet + LSTM 모델로 분류하고, 법적 소음 기준과 자동 비교해 객관적 판정 리포트를 생성합니다.",
-      tags: ["FastAPI", "YAMNet", "LSTM", "oneM2M", "Arduino", "ESP32", "Decision Fusion"],
-      scopeTitle: "AI 서버 담당 범위",
-      scope: [
-        "FastAPI AI 추론 서버 설계 및 모델 서빙",
-        "Arduino(ESP32) → oneM2M 플랫폼 → 서버 데이터 수신 파이프라인",
-        "Zero-Padding 전처리 파이프라인 구축 (Arduino RAM 한계 극복)",
-        "YAMNet 전이학습 + LSTM 시퀀스 모델 학습 파이프라인",
-        "AI 판정 + 진동 센서 Decision Fusion 로직 구현",
-        "소음 측정 결과 → 법적 기준 자동 비교 리포트 생성 API",
-      ],
-      highlightsTitle: "기술적 의사결정 & 트러블슈팅",
-      highlights: [
-        {
-          label: "YAMNet 분류 정확도 개선",
-          detail:
-            "범용 사전학습 모델의 층간소음 분류 확신도가 30%에 불과. 직접 수집한 소음 데이터셋으로 YAMNet 전이학습 + LSTM 시퀀스 모델 추가 → 75% 달성.",
-        },
-        {
-          label: "Arduino RAM 한계 극복 (100 → 900 샘플)",
-          detail:
-            "YAMNet 추론에 900샘플 필요하지만 Arduino는 100샘플만 처리 가능. 100샘플만 서버로 전송 후 서버에서 Zero-Padding(900샘플)을 적용하는 파이프라인으로 해결.",
-        },
-        {
-          label: "Decision Fusion으로 오탐지 감소",
-          detail:
-            "AI 단독 판정 시 TV·청소기 소리를 층간소음으로 오탐지. 진동 센서 데이터를 AI 판정과 결합하는 Decision Fusion 로직 적용 → 오탐지율 감소.",
-        },
-      ],
+      badge: "IoT-COSS 개발자 챌린지",
+      meta: "2026.01 ~ 02 · 사물인터넷 혁신융합대학사업단 · AI 서버",
+      desc: "Arduino 센서 소음 데이터를 YAMNet + LSTM으로 분류해 법적 기준과 자동 비교하는 층간소음 객관화 플랫폼. 전이학습으로 분류 정확도 30% → 75% 달성, Decision Fusion으로 오탐지를 줄였습니다.",
     },
     en: {
       title: "D-Log",
-      period: "2026",
-      role: "AI Server · Data Pipeline",
-      badge: "SOPKATHON Grand Prize",
-      badgeBg: "#b45309",
-      shortDesc: "oneM2M-based floor noise objectification AI platform",
-      desc: "Classifies noise from Arduino ESP32 sensors using YAMNet + LSTM and auto-compares against legal noise standards to generate objective judgment reports.",
-      tags: ["FastAPI", "YAMNet", "LSTM", "oneM2M", "Arduino", "ESP32", "Decision Fusion"],
-      scopeTitle: "AI Server Responsibilities",
-      scope: [
-        "FastAPI AI inference server design and model serving",
-        "Arduino(ESP32) → oneM2M platform → server data pipeline",
-        "Zero-padding preprocessing pipeline (overcoming Arduino RAM limits)",
-        "YAMNet transfer learning + LSTM sequence model training pipeline",
-        "AI + vibration sensor Decision Fusion logic",
-        "Noise measurement → auto legal standard comparison report API",
-      ],
-      highlightsTitle: "Technical Decisions & Troubleshooting",
-      highlights: [
-        {
-          label: "Improved YAMNet Classification Accuracy",
-          detail:
-            "Generic pretrained model had only 30% confidence on floor noise. Transfer learning on custom-collected dataset + LSTM sequence model → 75% accuracy.",
-        },
-        {
-          label: "Overcame Arduino RAM Constraint",
-          detail:
-            "YAMNet requires 900 samples; Arduino can only handle 100. Designed pipeline: transmit 100 samples → server-side Zero-Padding to 900 samples for inference.",
-        },
-        {
-          label: "Decision Fusion Reduced False Positives",
-          detail:
-            "AI alone misclassified TV and vacuum sounds as floor noise. Combined AI classification with vibration sensor data via Decision Fusion logic → false positive rate reduced.",
-        },
-      ],
+      badge: "IoT-COSS Developer Challenge",
+      meta: "Jan–Feb 2026 · IoT Innovation Consortium · AI Server",
+      desc: "A floor-noise objectification platform classifying Arduino sensor data with YAMNet + LSTM against legal standards. Transfer learning raised accuracy 30% → 75%; Decision Fusion cut false positives.",
     },
-    githubUrl: "https://github.com/sophie-24/Coss_IOT_2026",
-    notionUrl: "https://www.notion.so/7e630ae59565829c928e810e1e4b1798",
+  },
+  {
+    id: "evi",
+    notionUrl: "https://www.notion.so/36630ae5956580589b8dd3145404cbad",
+    tags: ["Python", "JavaScript", "Tableau"],
+    ko: {
+      title: "EVI 스마트 안전망 대시보드",
+      badge: "우수상 · 138팀 중 17팀",
+      meta: "2025 · 데이터안심구역 경진대회 (과기정통부·국토부)",
+      desc: "에너지 취약지수(EVI) 기반 스마트 안전망 대시보드. 수상 17개 팀 중 유일한 1인 개발로 데이터 분석부터 웹까지 전 과정을 담당했습니다.",
+    },
+    en: {
+      title: "EVI Smart Safety-Net Dashboard",
+      badge: "Excellence Award · top 17/138",
+      meta: "2025 · Data Safe Zone Competition (MSIT · MOLIT)",
+      desc: "An Energy Vulnerability Index dashboard. The only solo developer among 17 winning teams — handled everything from data analysis to web.",
+    },
+  },
+  {
+    id: "gempt",
+    notionUrl: "https://www.notion.so/2a230ae5956582cd9f4c0124596b9595",
+    tags: ["FastAPI", "Pillow", "Pytest"],
+    ko: {
+      title: "GemPT",
+      badge: null,
+      meta: "2025.11 · 동국대 X-Thon · 개발 리드 · 백엔드 · 기획",
+      desc: "듀얼 AI 교차검증으로 학습 답안을 검증하는 서비스. 개발 리드로서 기획과 백엔드 구현을 함께 담당했습니다.",
+    },
+    en: {
+      title: "GemPT",
+      badge: null,
+      meta: "Nov 2025 · Dongguk X-Thon · Dev Lead · Backend · Planning",
+      desc: "A study-answer verification service using dual-AI cross-validation. Led development while owning both planning and backend.",
+    },
+  },
+  {
+    id: "voice-poc",
+    notionUrl: "https://www.notion.so/39930ae5956580d3b610ec94baef7b81",
+    tags: [],
+    ko: {
+      title: "상담 음성데이터 AI 활용 검증 (POC)",
+      badge: "산학협력 · 진행 중",
+      meta: "2026.06 ~ · 한국사회보장정보원 · 백엔드",
+      desc: "사회보장 상담 음성데이터의 AI 기술 활용 가능성을 검증하는 산학협력 POC 프로젝트에 백엔드로 참여하고 있습니다.",
+    },
+    en: {
+      title: "Counseling Voice-Data AI PoC",
+      badge: "Industry-Academia · In Progress",
+      meta: "Jun 2026 ~ · Korea Social Security Information Service · Backend",
+      desc: "An industry-academia PoC validating AI applications for social-security counseling voice data, contributing as a backend engineer.",
+    },
   },
 ];
 
 // ─── AWARDS ──────────────────────────────────────────────────────────────────
 const awardsData = {
   ko: [
-    { title: "SOPKATHON 대상", org: "SOPT", year: "2026", desc: "AI 추론 서버 및 데이터 파이프라인 담당" },
+    { title: "SOPKATHON 안드로이드 파트 대상", org: "SOPT", year: "2026", desc: "Blur — Spring Boot 백엔드 · Blue/Green 무중단 배포 담당" },
     { title: "서울AI재단 이사장상", org: "서울시 AI 해커톤 (122팀 → 20팀 본선)", year: "2025", desc: "팀장 · 백엔드·AI 파이프라인 담당" },
     { title: "우수상", org: "데이터안심구역 활용 경진대회 (138팀 → 17팀)", year: "2025", desc: "데이터 파이프라인 및 분석 담당" },
   ],
   en: [
-    { title: "SOPKATHON Grand Prize", org: "SOPT", year: "2026", desc: "AI inference server & data pipeline" },
+    { title: "SOPKATHON Grand Prize (Android Part)", org: "SOPT", year: "2026", desc: "Blur — Spring Boot backend · Blue/Green zero-downtime deploy" },
     { title: "Seoul AI Foundation Director Award", org: "Seoul AI Hackathon (top 20/122)", year: "2025", desc: "Team Lead · Backend & AI pipeline" },
     { title: "Excellence Award", org: "Data Safe Zone Competition (top 17/138)", year: "2025", desc: "Data pipeline & analysis" },
   ],
@@ -347,7 +436,7 @@ const copy = {
     name: "김규리",
     role: "Backend Engineer",
     tagline: "데이터와 AI 흐름을\n서비스 API로 연결합니다.",
-    bio: "사용자 눈에 보이지 않는 곳에서 데이터 흐름을 설계하고, AI 추론 결과를 실제 서비스로 연결하는 백엔드 개발자입니다. FastAPI 멀티에이전트 파이프라인부터 Spring Boot RESTful API까지, 파이프라인 설계와 서버 최적화에 집중합니다.",
+    bio: "근거 있는 개발과, 팀의 연결을 만드는 백엔드 엔지니어입니다. 데이터가 생성되고 저장되어 사용자 가치로 전달되는 과정을 End-to-End로 설계하고, N+1·동시성 충돌·외부 API 지연처럼 서비스 품질을 좌우하는 문제를 데이터와 로그로 확인하며 개선합니다. 좋은 백엔드는 API를 만드는 데서 끝나지 않고, 다른 직군이 제품을 완성할 수 있도록 연결하는 일이라고 믿습니다.",
     school: "동국대학교 컴퓨터공학과",
     strengths: [
       {
@@ -374,6 +463,8 @@ const copy = {
     },
     expand: "상세 보기",
     collapse: "접기",
+    moreProjectsLabel: "그 외 프로젝트",
+    resumeLabel: "이력서",
     certsLabel: "Certificates",
     contact: "같이 만들어봐요",
     contactDesc: "새로운 기회나 협업에 열려있습니다.",
@@ -383,7 +474,7 @@ const copy = {
     name: "Gyuri Kim",
     role: "Backend Engineer",
     tagline: "Connecting data & AI\nto production APIs.",
-    bio: "Backend engineer who designs data flows and connects AI inference results to real services. Focused on pipeline architecture and server optimization — from FastAPI multi-agent systems to Spring Boot RESTful APIs.",
+    bio: "A backend engineer who builds on evidence and connects the team. I design the end-to-end journey of data — from creation to storage to user value — and verify quality issues like N+1 queries, concurrency conflicts, and external API latency with data and logs. I believe good backend work doesn't end at the API: it connects other roles so the product gets finished.",
     school: "Dongguk University, Computer Science",
     strengths: [
       {
@@ -410,6 +501,8 @@ const copy = {
     },
     expand: "View Details",
     collapse: "Collapse",
+    moreProjectsLabel: "More Projects",
+    resumeLabel: "Resume",
     certsLabel: "Certificates",
     contact: "Let's Build Together",
     contactDesc: "Open to new opportunities and collaborations.",
@@ -489,6 +582,14 @@ export default function Home() {
                   className="px-5 py-2.5 border border-slate-200 text-slate-700 rounded-full font-semibold hover:border-blue-400 hover:text-blue-600 transition-colors"
                 >
                   Velog ↗
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1yz9z5bZXKPBUHBmXfjS3uYpYXrPo5ZxG/view"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 border border-slate-200 text-slate-700 rounded-full font-semibold hover:border-blue-400 hover:text-blue-600 transition-colors"
+                >
+                  {t.resumeLabel} ↗
                 </a>
                 <a
                   href="mailto:sophia.gyuri@gmail.com"
@@ -601,14 +702,16 @@ export default function Home() {
                             {p.title}
                           </h3>
                           <div className="flex gap-2 shrink-0 mt-1">
-                            <a
-                              href={project.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-700 transition-colors"
-                            >
-                              GitHub
-                            </a>
+                            {project.githubUrl && (
+                              <a
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-900 text-white hover:bg-slate-700 transition-colors"
+                              >
+                                GitHub
+                              </a>
+                            )}
                             <a
                               href={project.notionUrl}
                               target="_blank"
@@ -689,6 +792,50 @@ export default function Home() {
                     </div>
                   )}
                 </article>
+              );
+            })}
+          </div>
+
+          {/* ── More Projects ── */}
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-16 mb-6">
+            {t.moreProjectsLabel}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {moreProjects.map((project) => {
+              const m = project[lang];
+              return (
+                <a
+                  key={project.id}
+                  href={project.notionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-slate-200 rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all group block"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-1.5">
+                    <p className="font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
+                      {m.title}
+                    </p>
+                    {m.badge && (
+                      <span className="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full shrink-0 whitespace-nowrap">
+                        {m.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 font-medium mb-3">{m.meta}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">{m.desc}</p>
+                  {project.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[11px] px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </a>
               );
             })}
           </div>
