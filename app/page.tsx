@@ -151,7 +151,7 @@ export default function Home() {
           </div>
           <aside className="border-l border-slate-200 pl-7 lg:mb-1">
             <div className="mb-8 flex items-center gap-4">
-              <Image src="/profile.jpg" alt="김규리 프로필" width={62} height={62} className="h-[62px] w-[62px] rounded-full object-cover grayscale" priority />
+              <Image src="/profile.png" alt="김규리 프로필" width={62} height={62} className="h-[62px] w-[62px] rounded-full object-cover grayscale" priority />
               <div><p className="font-bold">김규리 · Gyuri Kim</p><p className="mt-1 text-sm text-slate-500">Builds with evidence.</p></div>
             </div>
             <div className="grid grid-cols-3 gap-3 border-y border-slate-200 py-6">
