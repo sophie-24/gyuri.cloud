@@ -154,9 +154,6 @@ export default function Home() {
               <Image src="/profile.png" alt="김규리 프로필" width={62} height={62} className="h-[62px] w-[62px] rounded-full object-cover grayscale" priority />
               <div><p className="font-bold">김규리 · Gyuri Kim</p><p className="mt-1 text-sm text-slate-500">Builds with evidence.</p></div>
             </div>
-            <div className="grid grid-cols-3 gap-3 border-y border-slate-200 py-6">
-              {[['5', 'AI agents'], ['17', 'APIs verified'], ['87%', 'classification']].map(([number, label]) => <div key={label}><p className="text-2xl font-black tracking-[-.06em]">{number}</p><p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">{label}</p></div>)}
-            </div>
             <p className="mt-6 text-sm leading-6 text-slate-500">“좋은 백엔드는 API에서 끝나지 않고, 팀이 제품을 완성할 수 있도록 연결하는 일입니다.”</p>
           </aside>
         </div>
