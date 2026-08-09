@@ -1,17 +1,161 @@
+/* Pretendard: 한글 자소 균형이 맞는 웹폰트. 이걸 지정하지 않으면 Windows에서는
+   맑은 고딕으로 폴백되어, 같은 레이아웃이라도 완성도가 눈에 띄게 떨어진다. */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css");
 @import "tailwindcss";
 
-:root { --background: #fafafa; --foreground: #111827; }
-html { scroll-behavior: smooth; }
-body { background: var(--background); color: var(--foreground); }
-.hero-grid { background-image: linear-gradient(to right, rgba(148,163,184,.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,.15) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, black, transparent 85%); }
-.eyebrow { font-size: .6875rem; font-weight: 800; letter-spacing: .18em; color: #2563eb; }
-.section-title { margin-top: 1.15rem; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: .95; letter-spacing: -.065em; color: #111827; }
-.project-card { overflow: hidden; border: 1px solid #e2e8f0; border-radius: 1rem; background: #fff; transition: border-color .2s, box-shadow .2s; }
-.project-card:hover { border-color: #94a3b8; }
-.project-card.is-open { box-shadow: 0 18px 45px -25px rgba(15,23,42,.35); }
-.project-card.violet.is-open { border-color: #c4b5fd; }
-.project-card.blue.is-open { border-color: #93c5fd; }
-.project-card.emerald.is-open { border-color: #6ee7b7; }
-.project-detail { background: linear-gradient(180deg, #f8fafc 0%, #fff 100%); animation: reveal .28s ease-out both; }
-.detail-label { margin-bottom: 1rem; font-size: .625rem; font-weight: 900; letter-spacing: .16em; color: #64748b; }
-@keyframes reveal { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+:root {
+  --background: #fafafa;
+  --foreground: #111827;
+  --font-body: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  word-break: keep-all; /* 한글 단어 중간에서 줄이 끊기지 않게 */
+}
+
+/* 영문 디스플레이 헤드라인에만 Geist를 쓴다. Geist에는 한글 글리프가 없으므로
+   한글이 들어가는 요소에는 절대 적용하지 않는다. */
+.font-display { font-family: var(--font-geist-sans), var(--font-body); }
+
+/* ---------------------------------------------------------------------------
+   Type scale
+   사이트 전체의 '최소 글자 크기'를 20px로 잡는다.
+   20px보다 작던 단계(마이크로 라벨·xs·sm·base)는 전부 20px로 끌어올렸다.
+   크기로 위계를 만들 수 없게 된 만큼, 굵기·색·대문자·자간으로 구분한다.
+--------------------------------------------------------------------------- */
+.text-\[10px\] { font-size: 20px; line-height: 1.5; }
+.text-xs { font-size: 20px; line-height: 1.6; }
+.text-sm { font-size: 20px; line-height: 1.75; }
+.text-base { font-size: 20px; line-height: 1.8; }
+.text-lg { font-size: 23px; line-height: 1.7; }
+.text-xl { font-size: 26px; line-height: 1.5; }
+.text-2xl { font-size: 32px; line-height: 1.3; }
+
+/* 라벨이 20px로 커졌으므로 넓은 자간을 그대로 두면 줄이 넘친다. 자간을 줄인다. */
+.tracking-\[\.2em\],
+.tracking-\[\.18em\],
+.tracking-\[0\.17em\],
+.tracking-\[\.16em\],
+.tracking-\[\.14em\] { letter-spacing: .07em; }
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, .15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, .15) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+/* --- 섹션 공통 리듬 --------------------------------------------------------- */
+.eyebrow { font-size: 20px; font-weight: 800; letter-spacing: .07em; color: #2563eb; }
+/* 어두운 배경에서 blue-600은 3.44:1로 WCAG AA(4.5:1) 미달 → blue-300은 9.85:1 */
+.eyebrow.on-dark { color: #93c5fd; }
+
+.section-title {
+  margin-top: .75rem;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  color: #111827;
+}
+.section-title.on-dark { color: #fff; }
+.section-lead { margin-top: 1.15rem; max-width: 46ch; font-size: 20px; line-height: 1.75; color: #475569; }
+.section-lead.on-dark { color: #cbd5e1; }
+
+/* --- 카드 ------------------------------------------------------------------ */
+.metric-pill {
+  display: inline-block;
+  border-radius: 9999px;
+  background: #0f172a;
+  padding: .45rem 1rem;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: #fff;
+}
+
+/* 프로젝트별 색을 다르게 주면 카드가 서로 다른 종류처럼 보인다.
+   네 면 모두 같은 연한 파랑으로 묶어 하나의 시리즈로 읽히게 한다. */
+.project-card {
+  overflow: hidden;
+  border: 1px solid #dbeafe;
+  border-radius: 1.25rem;
+  background: #fff;
+  transition: border-color .2s, box-shadow .2s;
+}
+.project-card:hover { border-color: #93c5fd; box-shadow: 0 22px 50px -34px rgba(37, 99, 235, .28); }
+
+.btn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  border-radius: 9999px;
+  background: #2563eb;
+  padding: .6rem 1.25rem;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  transition: background .18s, transform .18s;
+}
+.btn-more:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+/* 소속·역할·기간과 서비스 요약을 한 덩어리로 묶는 카드.
+   프로젝트를 훑을 때 "누구와, 무엇을, 언제"가 먼저 눈에 들어오게 한다. */
+.meta-card {
+  border: 1px solid #e0f2fe;
+  border-radius: 1rem;
+  background: #f0f9ff;
+  padding: 1.35rem 1.5rem;
+}
+.meta-card dt {
+  min-width: 3.2rem;      /* 라벨 폭을 맞춰 값의 시작점을 정렬한다 */
+  font-weight: 700;
+  color: #0369a1;
+  white-space: nowrap;
+}
+/* 라벨은 20px 유지하고 값만 한 단계 낮춰 라벨과 값의 위계를 만든다.
+   사이트 최소 크기(20px) 규칙의 유일한 예외. */
+.meta-card dd { font-size: 18px; line-height: 1.6; color: #334155; }
+.meta-card .meta-summary {
+  margin-top: 1.1rem;
+  border-top: 1px solid #e0f2fe;
+  padding-top: 1.1rem;
+  color: #334155;
+}
+
+.more-project-card {
+  overflow: hidden;
+  border: 1px solid #dbeafe;
+  border-radius: 1rem;
+  background: #fff;
+  transition: border-color .2s, box-shadow .2s;
+}
+.more-project-card:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 14px 34px -26px rgba(37, 99, 235, .3);
+}
+
+.detail-label {
+  margin-bottom: .85rem;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  color: #64748b;
+}
+
+.reveal { animation: reveal .26s ease-out both; }
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { animation: none; }
+  .more-project-card:hover { transform: none; }
+}
